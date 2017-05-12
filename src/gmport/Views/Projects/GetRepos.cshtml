@@ -1,0 +1,23 @@
+﻿@{
+    ViewData["GMPort"] = "Projects";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@model IEnumerable<gmport.Models.ghreq>
+
+
+<h1>Projects Page</h1>
+
+
+<h2>All Repos</h2>
+<hr />
+<ol>
+    @foreach (var repo in Model)
+    {
+        <li>
+            <ul>
+                <li>Repo: @Html.DisplayFor(modelItem => repo.Name)</li>
+            </ul>
+        </li>
+    }
+</ol>
