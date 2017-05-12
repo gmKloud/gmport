@@ -207,6 +207,9 @@
 -resource:"C:\Users\epicodus\Desktop\gmport\src\gmport\obj\Debug\netcoreapp1.0\gmportdotnet-compile.deps.json",gmport.deps.json
 "C:\Users\epicodus\Desktop\gmport\src\gmport\Program.cs"
 "C:\Users\epicodus\Desktop\gmport\src\gmport\Startup.cs"
+"C:\Users\epicodus\Desktop\gmport\src\gmport\Controllers\AboutController.cs"
+"C:\Users\epicodus\Desktop\gmport\src\gmport\Controllers\ContactController.cs"
 "C:\Users\epicodus\Desktop\gmport\src\gmport\Controllers\HomeController.cs"
+"C:\Users\epicodus\Desktop\gmport\src\gmport\Controllers\ProjectsController.cs"
 "C:\Users\epicodus\Desktop\gmport\src\gmport\Models\APIreq.cs"
 "C:\Users\epicodus\Desktop\gmport\src\gmport\Models\ghreq.cs"
