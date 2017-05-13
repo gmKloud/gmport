@@ -3,7 +3,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-@model IEnumerable<gmport.Models.ghreq>
+@*@model IEnumerable<gmport.Models.ghreq>*@
 
 
 <h1>Projects Page</h1>
@@ -16,7 +16,7 @@
     {
         <li>
             <ul>
-                <li>Repo: @Html.DisplayFor(modelItem => repo.Name)</li>
+                <li>Repo: @repo.name</li>
             </ul>
         </li>
     }

@@ -4,8 +4,10 @@ using System.Threading.Tasks;
 using RestSharp;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using System.Net.Http;
-using System.Net;
+using RestSharp.Authenticators;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.ComponentModel.DataAnnotations;
+using NuGet.Protocol.Core.v3;
 
 namespace gmport.Models
 {
@@ -13,28 +15,33 @@ namespace gmport.Models
     {
         public string Name { get; set; }
 
-        public static List<ghreq> GetRepos()
+        public static JArray GetRepos()
         {
 
             var client = new RestClient("https://api.github.com");
 
             ////created HTTP Content to be posted
-            var request = new RestRequest("?access_token=" + EnvironmentVariables.authToken + ".json", Method.GET);
+            var request = new RestRequest("/users/gmkhanna/starred", Method.GET);
 
-            //client.Authenticator = new HttpBasicAuthenticator(EnvironmentVariables.clientID, EnvironmentVariables.clientSecret); //// if password needed.
+            request.AddHeader("Accept", "application / vnd.github.v3 + json");
+            request.AddHeader("User-Agent", "gmkhanna");
+
+            //request.AddHeader(EnvironmentVariables.user, EnvironmentVariables.authToken);
+
+            //client.Authenticator = new HttpBasicAuthenticator(EnvironmentVariables.userName, EnvironmentVariables.password);
 
             var response = new RestResponse();
 
-            //Task.Run(async () =>
-            //{
-            //    response = await GetResponseContentAsync(client, request) as RestResponse;
-            //}).Wait();
+            Task.Run(async () =>
+            {
+                response = await GetResponseContentAsync(client, request) as RestResponse;
+            }).Wait();
 
+            //var response = client.ExecuteAsync<List<ghreq>>(request);
 
-            JObject jsonResponse = JsonConvert.DeserializeObject<JObject>(response.Content);
-            var repoList = JsonConvert.DeserializeObject<List<ghreq>>(jsonResponse["repos"].ToString());
+            JArray jsonResponse = JsonConvert.DeserializeObject<JArray>(response.Content);
 
-            return repoList;
+            return jsonResponse;
             
 
             ////Get Response
@@ -49,6 +56,16 @@ namespace gmport.Models
 
             //request.Headers.Add("Authorization: token" + EnvironmentVariables.authToken);
 
+        }
+
+        public static Task<IRestResponse> GetResponseContentAsync(RestClient reqClient, RestRequest querriedReq)
+        {
+            var compl = new TaskCompletionSource<IRestResponse>();
+            reqClient.ExecuteAsync(querriedReq, ResponseStatus =>
+            {
+                compl.SetResult(ResponseStatus);
+            });
+            return compl.Task;
         }
     }
 }
